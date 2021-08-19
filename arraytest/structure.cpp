@@ -309,6 +309,7 @@ void sortTestNew()		// 구조체를 이용한 성적처리
 {
 	double f_kor = 0.3, f_eng = 0.7;
 	double tot[nArr];
+	//double* tot = (double*)malloc(sizeof(double)*nArr);
 	int i, j, k;
 
 	for (i = 0; i < nArr; i++)
@@ -340,15 +341,24 @@ void sortTestEx()		// 구조체를 이용한 성적처리 - 파일 입출력
 	//double tot[nArr], avg[nArr];
 	int i, j, k;
 
-	FILE* fin = fopen("C:\\Users\\hulklee1\\table1.txt", "r");
-	FILE* fout = fopen("C:\\Users\\hulklee1\\table1.rpt", "w+b");
-	for (i = 0; i < nArr; i++) fscanf(fin, "%s", student[i].name);
-	for (i = 0; i < nArr; i++) fscanf(fin, "%d", &student[i].kor);
-	for (i = 0; i < nArr; i++) fscanf(fin, "%d", &student[i].eng);
+	int num; //file에서 read
+	STU *students; //malloc으로 메모리 확보
+	//
+	
+
+	FILE* fin = fopen("C:\\Users\\ChangDuk\\aa1.txt", "r");
+	FILE* fout = fopen("C:\\Users\\ChangDuk\\aa1.rpt", "w+b");
+	fscanf(fin, "%d", &num);
+
+	students =(STU *)malloc(sizeof(STU)*num);
+
+	for (i = 0; i < nArr; i++) fscanf(fin, "%s", students[i].name);
+	for (i = 0; i < nArr; i++) fscanf(fin, "%d", &students[i].kor);
+	for (i = 0; i < nArr; i++) fscanf(fin, "%d", &students[i].eng);
 	for (i = 0; i < nArr; i++)
 	{
-		student[i].tot = student[i].kor + student[i].eng;
-		student[i].avg = student[i].tot / 2;
+		students[i].tot = students[i].kor + students[i].eng;
+		students[i].avg = students[i].tot / 2;
 	}
 
 	fprintf(fout, "Original :\n");
@@ -392,18 +402,21 @@ void VoidTest()
 	VoidPrint(&a, 3);
 }
 
+
 void StreamTest()
 {
 	int m;
 	float d;
 	char buf[1024];
-	FILE* fin = fopen("C:\\Users\\hulklee1\\aa", "r");  // 만약 파일이 존재하지 않으면 NULL 반환
-	FILE* fout = fopen("C:\\Users\\hulklee1\\aa.o", "w+b");
+	FILE* fin = fopen("C:\\Users\\ChangDuk\\aa1", "r");  // 만약 파일이 존재하지 않으면 NULL 반환
+	FILE* fout = fopen("C:\\Users\\ChangDuk\\aa1.o", "w+b");
+
 	if (fin != NULL)
 	{
 		fscanf(fin, "%d %f %s", &m, &d, buf);
 		fprintf(fout, "정수 : %d\n실수 : %f\n문자열 : %s\n", m, d, buf);
 		printf("정수 : %d\n실수 : %f\n문자열 : %s\n", m, d, buf);
+		
 		//while (1)
 		//{
 		//	if(fgets(buf, 1024, f) == NULL) break;
@@ -418,13 +431,32 @@ void StreamTest()
 
 int main()
 {
-	//score();
-	//Good();
-	//PointerTest();
-	//solution1();
-	//SwapTest();
-	//sortTestNew();
-	//VoidTest();
-	//StreamTest();
-	sortTestEx();
+	/*while (1)
+	{
+		printf(
+			"1.score();"\n
+			"2.Good();\n"
+			"3.PointerTest();\n"
+			"4.solution1();\n"
+			"5.SwapTest();\n"
+			"6.sortTestNew();\n"
+			"7.VoidTest();\n"
+			"8.StreamTest();\n"
+			"9.sortTestEx();\n"
+			"0. Exit\n\n"
+			"-----------------------"
+			"Select Menu\n");
+		scanf("%d", &k);
+		if (k == 1) score();
+		else break;*/
+		//score();
+		//Good();
+		//PointerTest();
+		//solution1();
+		//SwapTest();
+		//sortTestNew();
+		//VoidTest();
+		//StreamTest();
+		sortTestEx();
+
 }
