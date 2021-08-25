@@ -52,11 +52,11 @@ int Good()
 		{
 			printf("%s %s \n ", good, mon);
 		}
-		else if (k < 18)
+		else if (k>12 && k<18)
 		{
 			printf("%s %s \n ", good, noon);
 		}
-		else if (k < 23)
+		else if (k>18 && k< 23)
 		{
 			printf("%s %s \n ", good, even);
 		}
@@ -343,13 +343,13 @@ void sortTestEx()		// 구조체를 이용한 성적처리 - 파일 입출력
 
 	int num; //file에서 read
 	STU *students; //malloc으로 메모리 확보
-	//
+	
 	
 
 	FILE* fin = fopen("C:\\Users\\ChangDuk\\aa1.txt", "r");
 	FILE* fout = fopen("C:\\Users\\ChangDuk\\aa1.rpt", "w+b");
+	
 	fscanf(fin, "%d", &num);
-
 	students =(STU *)malloc(sizeof(STU)*num);
 
 	for (i = 0; i < nArr; i++) fscanf(fin, "%s", students[i].name);
@@ -408,6 +408,7 @@ void StreamTest()
 	int m;
 	float d;
 	char buf[1024];
+
 	FILE* fin = fopen("C:\\Users\\ChangDuk\\aa1", "r");  // 만약 파일이 존재하지 않으면 NULL 반환
 	FILE* fout = fopen("C:\\Users\\ChangDuk\\aa1.o", "w+b");
 
@@ -429,12 +430,76 @@ void StreamTest()
 	else printf("입력 파일이 존재하지 않습니다\n");
 }
 
+#define KBD_BUF_SIZE 20  //하나의 변수처럼 정의하면 바꾸고 싶을 때 define 한 숫자만 바꿔주면 됨.
+#define MAX(x,y) (x>y)?x:y;
+#define MIN(x1,y1) (x>y)?x1:y1;
+
+int  
+void StringParse()//문자열을 입력받아서 int, double, 문자열 입력을 수행(scanf미사용)
+{
+	while (1)
+	{
+		int k;
+		char b[5];
+
+		printf("\n\n\n === 문자열 변환 테스트 + @===\n"
+			"   1. 정수 (int)\n"
+			"   2. 실수 (double);\n"
+			"   3. 문자열 (공백포함); \n"
+			"   4. 매크로 함수 테스트 \n"
+			"==============================\n"
+			"   Select Menu   ");
+		
+		fgets(b ,5, stdin);
+		//scanf("%d", &k); //최종 kdb buffer의 엔터키 처리 필요
+		//fflush(stdin); //출력버퍼용
+
+		if (b[0] == 0x31 ) //(k ==1) 비교문의 차이 0x31 == 49 =='1'
+		{
+			char buf[KBD_BUF_SIZE];
+			printf("정수를 입력하세요   :"); //prompt 메시지
+			//scanf("%s", buf);
+			//fgets(buf, KBD_BUF_SIZE, stdin); //stdin 은 keyboard, 최대 20까지 받아들여라. 그 이상 입력되어도 20까지만 받아들이기 때문에 에러 발생x ,until엔터
+			//int n = atoi(buf);
+			printf("변환된 정수값은 %d 입니다 \n\n",GetInt());
+
+		}
+		
+		else if (*b == '2')
+		{
+			char buf[KBD_BUF_SIZE];
+			printf("실수를 입력하세요   :"); //prompt 메시지
+			//scanf("%s", buf);
+			//fgets(buf, KBD_BUF_SIZE, stdin); //stdin 은 keyboard, 최대 20까지 받아들여라. 그 이상 입력되어도 20까지만 받아들이기 때문에 에러 발생x
+			//double d = atof(buf);
+			printf("변환된 실수값은 %f 입니다 \n\n", GetDouble());
+
+		}
+		else if (*b == '0') break;
+		else if (*b == '4')
+		{
+			int x, y;
+			float x1, y1;
+
+			printf("두개의 정수를 입력하세요   :");
+			//scanf("%d %d", &x, &y);
+			x = Getint(); y = Getint();
+			printf("두개의 정수 %d 와 %d 중 큰 수는 %d 입니다.\n",x , y, MAX(x,y));
+			printf("두개의 실수를 입력하세요   :");
+			scanf("%f %f , &x1, &y1");
+			printf("두개의 실수 %f 와 %f 중 작은 수는 %f 입니다.\n", x1, y1, MIN(x1, y1));
+		}
+	}
+}
+
 int main()
 {
-	/*while (1)
+	while (1)
 	{
+		int k;
 		printf(
-			"1.score();"\n
+
+			"1.score();\n"
 			"2.Good();\n"
 			"3.PointerTest();\n"
 			"4.solution1();\n"
@@ -443,20 +508,27 @@ int main()
 			"7.VoidTest();\n"
 			"8.StreamTest();\n"
 			"9.sortTestEx();\n"
-			"0. Exit\n\n"
+			"10.StringParse();\n"
+			"0. Exit;\n\n"
 			"-----------------------"
 			"Select Menu\n");
-		scanf("%d", &k);
-		if (k == 1) score();
-		else break;*/
-		//score();
-		//Good();
-		//PointerTest();
-		//solution1();
-		//SwapTest();
-		//sortTestNew();
-		//VoidTest();
-		//StreamTest();
-		sortTestEx();
 
+		scanf("%d", &k);
+
+		switch (k)
+		{
+		case 1: score(); break;
+		case 2: Good(); break;
+		case 3: PointerTest(); break;
+		case 4: solution1(); break;
+		case 5: SwapTest(); break;
+		case 6: sortTestNew(); break;
+		case 7: VoidTest(); break;
+		case 8: StreamTest(); break;
+		case 9: sortTestEx(); break;
+		case 10: StringParse(); break;
+
+		default: return 0;
+		}
+	}
 }
